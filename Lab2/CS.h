@@ -3,31 +3,35 @@
 #include "header.h"
 
 
-using namespace std;
-
-
-class CS {
+class CS
+{
     int number_of_workshops;
     int effectiveness;
 
-public:
-    int ID;
-    static int MaxId;
 
-    string name;
+public:
+
+    int ID;
+    inline static int MaxId = 1000;
+    std::string name;
     int workshops_in_operation;
 
     CS();
-    CS(string name, int number_of_workshops, int workshops_in_operation, int effectiveness);
+    CS(std::string name, int number_of_workshops, int workshops_in_operation, int effectiveness);
 
-    void inputCSInfo();
+    void InputInfo();
 
     void PrintInfo();
 
-    void EditCS();
+    void Edit();
 
     void Edit(int active);
 
-    friend ofstream& operator << (ofstream& out, const CS& cs);
-    friend ifstream& operator >> (ifstream& file, CS& cs);
+    void SetMaxId(int MaxId) { this->MaxId = MaxId; };
+    int GetMaxId() { return MaxId; };
+
+    int GetID() { return ID; };
+
+    friend std::ofstream& operator << (std::ofstream& out, const CS& cs);
+    friend std::ifstream& operator >> (std::ifstream& file, CS& cs);
 };
