@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleGeneral.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
