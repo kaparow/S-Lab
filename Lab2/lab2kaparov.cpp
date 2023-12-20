@@ -1,20 +1,17 @@
-﻿/*#include "header.h"
+﻿#include "header.h"
 #include "Console_func.h"
 #include "CS.h"
 #include "Pipe.h"
 
-
 int main()
 {
-    setlocale(LC_ALL, "ru");
-
     unordered_map<int, Pipe> pipes;
     unordered_map<int, CS> stations;
 
 
     while (1) {
-       
-        std::cout << "\n1. Добавить трубу\n" <<
+
+        cout << "\n1. Добавить трубу\n" <<
             "2. Добавить КС\n" <<
             "3. Просмотр всех объектов\n" <<
             "4. Редактировать трубу\n" <<
@@ -23,7 +20,7 @@ int main()
             "7. Загрузить\n" <<
             "8. Поиск труб по фильтру\n" <<
             "9. Поиск станций по фильтру\n" <<
-            "0. Выход\n" << std::endl;
+            "0. Выход\n" << endl;
 
 
         switch (CorrectNumber(0, 9))
@@ -82,4 +79,4 @@ int main()
     }
 
     return 0;
-}*/
+}
