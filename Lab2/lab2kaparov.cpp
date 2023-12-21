@@ -2,71 +2,71 @@
 #include "Console_func.h"
 #include "CS.h"
 #include "Pipe.h"
+#include <format>
+#include <chrono>
+
+using namespace std;
+using namespace chrono;
 
 int main()
 {
-    unordered_map<int, Pipe> pipes;
-    unordered_map<int, CS> stations;
 
+    redirect_stream_wrapper cerr_out(cerr);
+    string time = format("{:%d_%m_%Y_%H_%M_%OS}", system_clock::now() + hours(3));
+    ofstream logfile("Logs/log_" + time);
+    if (logfile)
+        cerr_out.redirect(logfile);
+
+    TransportSystem Pipeline_Gas_Transpartation;
 
     while (1) {
 
         cout << "\n1. Добавить трубу\n" <<
             "2. Добавить КС\n" <<
             "3. Просмотр всех объектов\n" <<
-            "4. Редактировать трубу\n" <<
-            "5. Редактировать КС\n" <<
-            "6. Сохранить\n" <<
-            "7. Загрузить\n" <<
-            "8. Поиск труб по фильтру\n" <<
-            "9. Поиск станций по фильтру\n" <<
+            "4. Редактировать\n" <<
+            "5. Удалить\n" <<
+            "6. Искать по фильтру\n" <<
+            "7. Сохранить\n" <<
+            "8. Загрузить\n" <<
             "0. Выход\n" << endl;
 
 
-        switch (CorrectNumber(0, 9))
+        switch (CorrectNumber(cin, 0, 8))
         {
 
         case 1: {
-            Pipe pipe;
-            pipe.InputPipeInfo();
-            pipes.insert({ pipe.ID, pipe });
+            Pipeline_Gas_Transpartation.InputPipe();
             break;
         }
         case 2: {
-            CS station;
-            station.inputCSInfo();
-            stations.insert({ station.ID, station });
+            Pipeline_Gas_Transpartation.InputCS();
             break;
         }
         case 3: {
-            View(pipes, stations);
+            Pipeline_Gas_Transpartation.View();
             break;
         }
         case 4: {
-            EditPipeline(pipes);
+            Pipeline_Gas_Transpartation.Edit();
             break;
         }
 
         case 5: {
-            EditCopressorStation(stations);
+            Pipeline_Gas_Transpartation.Delete();
             break;
         }
         case 6: {
-            SaveConfiguration(pipes, stations);
+            Pipeline_Gas_Transpartation.Search();
             break;
         }
 
         case 7: {
-            LoadConfiguration(pipes, stations);
+            Pipeline_Gas_Transpartation.Save();
             break;
         }
         case 8: {
-            SearchPipes(pipes);
-            break;
-        }
-
-        case 9: {
-            SearchCS(stations);
+            Pipeline_Gas_Transpartation.Load();
             break;
         }
 

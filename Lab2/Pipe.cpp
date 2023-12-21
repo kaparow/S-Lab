@@ -1,6 +1,6 @@
 #include "Pipe.h"
 
-int Pipe::MaxId = 0;
+using namespace std;
 
 Pipe::Pipe() {
     name = "Non";
@@ -10,26 +10,28 @@ Pipe::Pipe() {
     ID = ++MaxId;
 }
 
-Pipe::Pipe(string name, double length, int diameter, bool in_repairing) {
+Pipe::Pipe(string name, float length, int diameter, bool in_repairing) {
     this->name = name;
     this->length = length;
     this->diameter = diameter;
     this->in_repairing = in_repairing;
 }
 
-void Pipe::InputPipeInfo() {
+void Pipe::InputInfo() {
+
     cout << "Введите название трубы: ";
-    cin.ignore(INT_MAX, '\n');
-    getline(cin, name);
+    name = input_string(cin);
 
     cout << "Введите длину трубы: ";
-    length = CorrectNumber(0.0, DBL_MAX);
+    length = CorrectNumber(cin, 0.0, 10000.);
+
 
     cout << "Введите диаметр трубы: ";
-    diameter = CorrectNumber(0, INT_MAX);
+    diameter = CorrectNumber(cin, 0, INT_MAX);
 
     cout << "Выберите состояние трубы(0 - в ремонте, 1 - В эксплуатации): " << endl;
-    in_repairing = CorrectNumber(0, 1);
+    in_repairing = CorrectNumber(cin, 0, 1);
+
 }
 
 void Pipe::PrintInfo() {
@@ -38,29 +40,20 @@ void Pipe::PrintInfo() {
     cout << "Диаметр: " << diameter << endl;
     cout << "Состояние(0 - в ремонте, 1 - в эксплуатации): " << (in_repairing) << endl;
     cout << "ID" << ID << endl;
+
+
 }
 
-void Pipe::Edit(const int answer) {
-    if (answer) in_repairing = true;
-    else in_repairing = false;
+void Pipe::Edit(int status) {
+    if (status) in_repairing = !in_repairing;
 }
 
-void Pipe::editInRepairStatus()
+void Pipe::Edit()
 {
     PrintInfo();
     cout << "Введите состояние трубы(0 - в ремонте, 1 - в эксплуатации):" << endl;
-    Edit(CorrectNumber(0, 1));
-}
+    Edit(CorrectNumber(cin, 0, 1));
 
-
-ostream& operator << (ostream& out, const Pipe& pipe)
-{
-
-    return out;
-}
-istream& operator >> (istream& in, Pipe& pipe)
-{
-    return in;
 }
 
 ofstream& operator << (ofstream& file, const Pipe& pipe) {
@@ -76,7 +69,8 @@ ofstream& operator << (ofstream& file, const Pipe& pipe) {
 
 ifstream& operator >> (ifstream& file, Pipe& pipe) {
     if (file.is_open()) {
-        file >> pipe.name;
+        file >> ws;
+        getline(file, pipe.name);
         file >> pipe.length;
         file >> pipe.diameter;
         file >> pipe.in_repairing;

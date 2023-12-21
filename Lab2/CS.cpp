@@ -1,11 +1,11 @@
 ﻿#include "CS.h"
 
-int CS::MaxId = 0;
+using namespace std;
 
 CS::CS() {
     name = "Non";
     number_of_workshops = 0;
-    this->workshops_in_operation = 0;
+    workshops_in_operation = 0;
     effectiveness = 0;
     ID = ++MaxId;
 }
@@ -17,24 +17,24 @@ CS::CS(string name, int number_of_workshops, int workshops_in_operation, int eff
     this->effectiveness = effectiveness;
 }
 
-void CS::inputCSInfo() {
+void CS::InputInfo() {
 
     cout << "Введите название КС: ";
-    cin.ignore(INT_MAX, '\n');
-    getline(cin, name);
+    name = input_string(cin);
 
     cout << "Введите количество цехов КС: ";
-    number_of_workshops = CorrectNumber(0, 50);
+    number_of_workshops = CorrectNumber(cin, 0, 50);
 
     cout << "Введите количество цехов в работе: ";
-    workshops_in_operation = CorrectNumber(0, number_of_workshops);
+    workshops_in_operation = CorrectNumber(cin, 0, number_of_workshops);
 
     cout << "Укажите эффективность(1,2,3)" << endl;
-    effectiveness = CorrectNumber(1, 3);
+    effectiveness = CorrectNumber(cin, 1, 3);
 }
 
 
 void CS::PrintInfo() {
+
     cout << "КС: " << name << endl;
     cout << "Количество цехов: " << number_of_workshops << endl;
     cout << "Количество цехов в работе: " << workshops_in_operation << endl;
@@ -47,12 +47,12 @@ void CS::Edit(int active) {
 }
 
 
-void CS::EditCS()
+void CS::Edit()
 {
 
     PrintInfo();
     cout << "Изменить количество цехов в работе:" << endl;
-    int answer = CorrectNumber(0, number_of_workshops);
+    int answer = CorrectNumber(cin, 0, number_of_workshops);
     Edit(answer);
 }
 
@@ -70,11 +70,13 @@ ofstream& operator << (ofstream& file, const CS& cs) {
 
 ifstream& operator >> (ifstream& file, CS& cs) {
     if (file.is_open()) {
-        file >> cs.name;
+        file >> ws;
+        getline(file, cs.name);
         file >> cs.number_of_workshops;
         file >> cs.workshops_in_operation;
         file >> cs.effectiveness;
         file >> cs.ID;
+
     }
     return file;
 }
