@@ -17,7 +17,7 @@ int main()
     if (logfile)
         cerr_out.redirect(logfile);
 
-    TransportSystem Pipeline_Gas_Transpartation;
+    TransportSystem Pipeline_Gas_Transpartation; //Console_func.h
 
     while (1) {
 
